@@ -1,0 +1,54 @@
+<?php 
+
+class Produto {
+    private $nome;
+    private $preco;
+    private static $quantidadeVendida = 0;
+
+    public function __construct($nome, $preco)
+    {
+        $this->nome = $nome;
+        $this->preco = $preco;
+    }
+
+    public function getNome() {
+        return $this->nome;
+    }
+
+    public function setNome($novoNome) {
+        if(strlen($novoNome) >= 3){
+            $this->nome = $novoNome;
+        } else {
+            echo "Nome de produto precisa ter ao menos 3 caracteres";
+        }
+    }
+
+    public function vender() {
+        self::$quantidadeVendida++;
+        echo "Produto $this->nome Vendido! <br>";
+    }
+
+    public static function exibirQuantidadeVendida() {
+        echo "Quantidade de Produtos vendidos: " . self::$quantidadeVendida . "<br>";
+    }
+}
+
+$produto1 = new Produto ("Livro", 29.99);
+$produto2 = new Produto ("Caneta", 2.99);
+
+
+
+
+
+// echo $produto1->GetNome();
+// echo "<br><br>";
+// $produto1->setNome("Livro A");
+// echo $produto1->getNome();
+$produto1->vender();
+$produto2->vender();
+
+Produto::exibirQuantidadeVendida();
+
+
+
+?>
