@@ -31,7 +31,19 @@ function listarContas() {
 }
 
 function buscarContaById() {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $id = $_GET['id'];
+        $conta = ContaRepository::getContaById($id);
 
+        if($conta){
+            echo json_encode($conta);
+        } else {
+            http_response_code(404); // Conta não encontrada
+            echo json_encode(['error' => 'Conta não encontrada']);
+        }
+    } else {
+        http_response_code(405); // Método não permitido
+    }
 }
 
 function cadastrarConta() {
