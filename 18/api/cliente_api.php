@@ -62,7 +62,7 @@ function cadastrarCliente() {
 function atualizarCliente() {
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = json_decode(file_get_contents("php://input"));
-
+        
         $cliente = new Cliente($data->id, $data->nome, $data->cpf);
         $success = ClienteRepository::updateCliente($cliente);
         echo json_encode(['success' => $success]);
