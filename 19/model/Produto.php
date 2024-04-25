@@ -1,6 +1,6 @@
 <?php
 
-class Produto {
+class Produto implements JsonSerializable {
     private $id;
     private $nome;
     private $descricao;
