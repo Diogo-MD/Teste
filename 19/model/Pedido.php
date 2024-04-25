@@ -11,6 +11,12 @@ class Pedido{
         $this->data_pedido = $data_pedido;
         $this->status = $status;
     }
+
+    public function jsonSerialize(): array {
+        return [
+            
+        ];
+    }
 }
 
 ?>

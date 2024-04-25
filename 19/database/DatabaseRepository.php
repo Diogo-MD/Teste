@@ -9,8 +9,8 @@ class DatabaseRepository {
     private static $conn;
 
     public static function connect() {
-        if (self::$conn){
-            self::$conn = new mysqli(self::$host, self::$username, self::$password, self::$database,);
+        if (!self::$conn){
+            self::$conn = new mysqli(self::$host, self::$username, self::$password, self::$database);
             if(self::$conn->connect_error) {
                 die("conexão falhou! " . self::$conn->connect_error);    
             }
