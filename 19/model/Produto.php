@@ -13,6 +13,15 @@ class Produto {
         $this->descricao = $descricao;
         $this->preco = $preco;
     }
+
+    public function jsonSerialize():array {
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'descricao' => $this->descricao,
+            'preco' => $this->preco
+        ];
+    }
 }
 
 ?>
