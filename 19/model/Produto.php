@@ -14,6 +14,15 @@ class Produto implements JsonSerializable {
         $this->preco = $preco;
     }
 
+    public function getNome() {
+        return $this->nome;
+    }
+    public function getDescricao() {
+        return $this->descricao;
+    }
+    public function getPreco() {
+        return $this->preco;
+    }
     public function jsonSerialize():array {
         return [
             'id' => $this->id,

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'database/PedidoRepository.php';
-require_once 'database/ProdutoRepository';
+require_once 'database/ProdutoRepository.php';
 
 $action = $_GET['action'];
 
