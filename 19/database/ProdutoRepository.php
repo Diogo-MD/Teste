@@ -1,5 +1,4 @@
 <?php
-
 require_once 'DatabaseRepository.php';
 require_once 'model/Produto.php';
 
@@ -8,10 +7,10 @@ class ProdutoRepository {
         $connection = DatabaseRepository::connect();
         $result = $connection->query("SELECT * FROM produto");
 
-        $produtos = [];
+        $produtos = [];        
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $produto = new Produto ($row['id'], $row['nome'], $row['descricao'], $row['preco']);
+                $produto = new Produto($row['id'], $row['nome'], $row['descricao'], $row['preco']);
                 $produtos[] = $produto;
             }
         }
@@ -19,12 +18,11 @@ class ProdutoRepository {
         return $produtos;
     }
 
-    public static function getProdutosById($id) {
+    public static function getProdutoById($id) {
         $connection = DatabaseRepository::connect();
         $result = $connection->query("SELECT * FROM produto WHERE id = $id");
 
         $produto = null;
-
         if($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $produto = new Produto($row['id'], $row['nome'], $row['descricao'], $row['preco']);
@@ -33,19 +31,39 @@ class ProdutoRepository {
         return $produto;
     }
 
-    public static function insertProduct(Produto $produto) {
-        $connection = DatabaseRepository::connect(); // Conexão com o DataBase
+    public static function insertProduto(Produto $produto) {
+        $connection = DatabaseRepository::connect();
 
-        $nome = $produto->getNome(); // Puxando valores privados
-        $descricao = $produto->getDescricao(); // Puxando valores privados
-        $preco = $produto->getPreco(); // Puxando valores privados
+        $nome = $produto->getNome();
+        $descricao = $produto->getDescricao();
+        $preco = $produto->getPreco();
 
-        // Insert de valores das variáveis acima
-        $sql = "INSERT INTO produto (nome, descricao, preco) Values ('$nome', '$descricao', '$preco')";
+        $sql = "INSERT INTO produto (nome, descricao, preco) VALUES ('$nome', '$descricao', '$preco')";
         $success = $connection->query($sql);
         $connection->close();
         return $success;
-    } 
-}
+    }
 
+    public static function updateProduto(Produto $produto) {
+        $connection = DatabaseRepository::connect();
+        $id = $produto->getId();
+        $nome = $produto->getNome();
+        $descricao = $produto->getDescricao();
+        $preco = $produto->getPreco();
+
+        $sql = "UPDATE produto SET nome='$nome', descricao='$descricao', preco='$preco'
+                WHERE id=$id";
+        $success = $connection->query($sql);
+        $connection->close();
+
+        return $success;
+    }
+
+    public static function deleteProduto($id) {
+        $connection = DatabaseRepository::connect();
+        $success = $connection->query("DELETE FROM produto WHERE id=$id");
+        $connection->close();
+        return $success;
+    }
+}
 ?>
