@@ -1,4 +1,5 @@
 <?php
+
 require_once 'DatabaseRepository.php';
 require_once 'model/Pedido.php';
 
@@ -18,5 +19,4 @@ class PedidoRepository {
         return $pedidos;
     }
 }
-
 ?>
