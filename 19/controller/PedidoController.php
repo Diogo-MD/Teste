@@ -13,6 +13,12 @@ class PedidoController {
             case 'cadastrar':
                 self::cadastrarPedido();
                 break;
+            case 'atualizar':
+                self::atualizarPedido();
+                break;
+            case 'excluir':
+                self::excluirPedido();
+                break;
             default:
                 http_response_code(400); // Requisição inválida
                 echo json_encode(['error' => 'Ação inválida']);
@@ -53,6 +59,42 @@ class PedidoController {
         } else {
             http_response_code(405);
         }
+    }
+
+    public static function atualizarPedido() {
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents("php://input"));
+            $id = $data->id;
+            $status = $data->status;
+            $data_pedido = $data->data_pedido;
+
+            // Existindo um pedido!
+            $pedidoExistente = PedidoRepository::getPedidoById($id);
+            if($pedidoExistente) {
+                //update das propriedades do pedido
+                $pedidoExistente->setStatus($status);
+                $pedidoExistente->setData($data_pedido);
+
+                $success = PedidoRepository::updatePedido($pedidoExistente, $id);
+                echo json_encode(['success' => $success]);
+            } else {
+                http_response_code(404);
+                echo json_encode(['error' => 'Pedido não encontrado']);
+            }
+        } else {
+            http_response_code(405);
+        }        
+    }
+
+    public static function excluirPedido() {
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents("php://input"));
+            $id = $data->id;
+            $success = PedidoRepository::deletePedido($id);
+            echo json_encode(['success' => $success]);
+        } else {
+            http_response_code(405);
+        }       
     }
 }
 ?>
